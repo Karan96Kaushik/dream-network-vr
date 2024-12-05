@@ -1,16 +1,16 @@
-[gd_scene load_steps=7 format=3 uid="uid://XXXXXXXXXXXX"]
+[gd_scene load_steps=9 format=3 uid="uid://0kj26wvfi1c5"]
 
 [ext_resource type="Script" path="res://scripts/vr_initialization.gd" id="1_abcd1"]
 [ext_resource type="Script" path="res://scripts/controller.gd" id="2_abcd2"]
 [ext_resource type="Script" path="res://scripts/environment_setup.gd" id="3_abcd3"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xxxxx"]
-albedo_color = Color(0.7, 0.7, 0.7, 1.0)
-roughness = 1.0
+[ext_resource type="PackedScene" uid="uid://bq86r4yll8po" path="res://addons/godot-xr-tools/hands/scenes/lowpoly/left_fullglove_low.tscn" id="3_n7ay2"]
+[ext_resource type="PackedScene" uid="uid://clc5dre31iskm" path="res://addons/godot-xr-tools/xr/start_xr.tscn" id="4_bsg42"]
+[ext_resource type="PackedScene" uid="uid://xqimcf20s2jp" path="res://addons/godot-xr-tools/hands/scenes/lowpoly/right_fullglove_low.tscn" id="4_sc28p"]
 
 [sub_resource type="Environment" id="Environment_xxxxx"]
 
-[sub_resource type="Sky" id="Sky_xxxxx"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xxxxx"]
+albedo_color = Color(0.7, 0.7, 0.7, 1)
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_abcd1")
@@ -21,12 +21,16 @@ script = ExtResource("1_abcd1")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
 
 [node name="XRController3D_Left" type="XRController3D" parent="XROrigin3D"]
-tracker = &"/user/hand/left"
+tracker = &"left_hand"
 script = ExtResource("2_abcd2")
 
+[node name="LeftHand" parent="XROrigin3D/XRController3D_Left" instance=ExtResource("3_n7ay2")]
+
 [node name="XRController3D_Right" type="XRController3D" parent="XROrigin3D"]
-tracker = &"/user/hand/right"
+tracker = &"right_hand"
 script = ExtResource("2_abcd2")
+
+[node name="RightHand" parent="XROrigin3D/XRController3D_Right" instance=ExtResource("4_sc28p")]
 
 [node name="Environment" type="Node3D" parent="."]
 script = ExtResource("3_abcd3")
@@ -43,4 +47,6 @@ directional_shadow_max_distance = 250.0
 [node name="Ground" type="CSGBox3D" parent="Environment"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.05, 0)
 size = Vector3(20, 0.1, 20)
-material = SubResource("StandardMaterial3D_xxxxx") 
+material = SubResource("StandardMaterial3D_xxxxx")
+
+[node name="StartXR" parent="." instance=ExtResource("4_bsg42")]
