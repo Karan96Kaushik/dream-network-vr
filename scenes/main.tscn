@@ -1,0 +1,46 @@
+[gd_scene load_steps=7 format=3 uid="uid://XXXXXXXXXXXX"]
+
+[ext_resource type="Script" path="res://scripts/vr_initialization.gd" id="1_abcd1"]
+[ext_resource type="Script" path="res://scripts/controller.gd" id="2_abcd2"]
+[ext_resource type="Script" path="res://scripts/environment_setup.gd" id="3_abcd3"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xxxxx"]
+albedo_color = Color(0.7, 0.7, 0.7, 1.0)
+roughness = 1.0
+
+[sub_resource type="Environment" id="Environment_xxxxx"]
+
+[sub_resource type="Sky" id="Sky_xxxxx"]
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_abcd1")
+
+[node name="XROrigin3D" type="XROrigin3D" parent="."]
+
+[node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
+
+[node name="XRController3D_Left" type="XRController3D" parent="XROrigin3D"]
+tracker = &"/user/hand/left"
+script = ExtResource("2_abcd2")
+
+[node name="XRController3D_Right" type="XRController3D" parent="XROrigin3D"]
+tracker = &"/user/hand/right"
+script = ExtResource("2_abcd2")
+
+[node name="Environment" type="Node3D" parent="."]
+script = ExtResource("3_abcd3")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Environment"]
+environment = SubResource("Environment_xxxxx")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment"]
+transform = Transform3D(0.853553, -0.146447, 0.5, 0, 0.707107, 0.707107, -0.5, -0.691342, 0.5, 0, 0, 0)
+shadow_enabled = true
+shadow_bias = 0.05
+directional_shadow_max_distance = 250.0
+
+[node name="Ground" type="CSGBox3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.05, 0)
+size = Vector3(20, 0.1, 20)
+material = SubResource("StandardMaterial3D_xxxxx") 

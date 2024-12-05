@@ -1,0 +1,14 @@
+; Add these configurations to your project settings
+[xr]
+openxr/enabled=true
+shaders/enabled=true
+
+[rendering]
+vr_mode=true
+
+[input]
+trigger_click={
+"deadzone": 0.5,
+"events": [Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":15,"pressure":0.0,"pressed":false,"script":null)
+]
+} 
